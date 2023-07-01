@@ -5,15 +5,9 @@ class TweetsController < ApplicationController
   end
 
   def index_by_user
-    token = cookies.signed[:twitclone_session_token]
-    session = Session.find_by(token: token)
-
-    if session
-      @tweets = session.user.tweets
-      render 'tweets/index' # can be omitted
-    else
-      render json: { tweet: [] }
-    end
+    @user = User.find_by(username: params[:username])
+    @tweets = @user.tweets.order(created_at: :desc)
+    render 'tweets/index'
   end
 
   def create
