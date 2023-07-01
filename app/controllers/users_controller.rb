@@ -6,6 +6,7 @@ class UsersController < ApplicationController
       render json: {
         user: {
           username: @user.username,
+          email: @user.email
         }
       }
     else
@@ -14,4 +15,10 @@ class UsersController < ApplicationController
       }
     end
   end
+
+  private
+
+    def user_params
+      params.require(:user).permit(:username, :email, :password)
+    end
 end
