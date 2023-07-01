@@ -4,7 +4,7 @@ class TweetsController < ApplicationController
     render 'tweets/index'
   end
 
-  def index_by_current_user
+  def index_by_user
     token = cookies.signed[:twitclone_session_token]
     session = Session.find_by(token: token)
 
