@@ -1,5 +1,5 @@
 class TweetsController < ApplicationController
-  def create
+  def index
     @tweets = Tweet.all
     render 'tweets/index'
   end
