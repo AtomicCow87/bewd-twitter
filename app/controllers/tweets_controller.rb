@@ -35,10 +35,18 @@ class TweetsController < ApplicationController
   end
 
   def destroy
-    @tweet = Tweet.find_by(id: params[:id])
+    token = cookies.signed[:twitclone_session_token]
+    session = Session.find_by(token: token)
 
-    if @tweet&.destroy
-      render json: { success: true }
+    if session
+      user = session.user
+      @tweet = user.tweets.find_by(id: params[:id])
+
+      if @tweet&.destroy
+        render json: { success: true }
+      else
+        render json: { success: false }
+      end
     else
       render json: { success: false }
     end
