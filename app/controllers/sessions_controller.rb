@@ -11,6 +11,7 @@ class SessionsController < ApplicationController
 
       render json: {
         success: true
+        username: @user.username
       }
     else
       render json: {
