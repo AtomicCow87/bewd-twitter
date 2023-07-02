@@ -11,12 +11,12 @@ class TweetsController < ApplicationController
   end
 
   def create
-    token = cookies.signed[:twitclone_session_token]
+    token = cookies.signed[:twitter_session_token]
     session = Session.find_by(token: token)
 
     if session
       user = session.user
-      @tweet = user.tweet.new(tweet_params)
+      @tweet = user.tweets.new(tweet_params)
 
       if @tweet.save
         render 'tweets/create' # can be omitted
@@ -29,7 +29,7 @@ class TweetsController < ApplicationController
   end
 
   def destroy
-    token = cookies.signed[:twitclone_session_token]
+    token = cookies.signed[:twitter_session_token]
     session = Session.find_by(token: token)
 
     if session
@@ -48,7 +48,7 @@ class TweetsController < ApplicationController
 
   private
 
-  def task_params
+  def tweet_params
     params.require(:tweet).permit(:message)
   end
 end
